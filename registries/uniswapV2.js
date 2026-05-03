@@ -1046,9 +1046,6 @@ const uniV2Configs = {
   'kokomoswap': {
     bsc: '0x971A5f6Ef792bA565cdF61C904982419AA77989f',
   },
-  'kokoswap': {
-    bsc: '0x971A5f6Ef792bA565cdF61C904982419AA77989f',
-  },
   'koone': {
     era: '0x6167ce530e710e29d0F32CFe50062028800e5918',
   },

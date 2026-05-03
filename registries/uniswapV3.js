@@ -883,13 +883,6 @@ const uniV3Configs = {
       fromBlock: 1,
     },
   },
-  'molten-v4': {
-    core: {
-      factory: '0x74EfE55beA4988e7D92D03EFd8ddB8BF8b7bD597',
-      fromBlock: 15770796,
-      isAlgebra: true,
-    },
-  },
   'monday-trade-spot': {
     monad: {
       factory: '0xc1e98d0a2a58fb8abd10ccc30a58efff4080aa21',
