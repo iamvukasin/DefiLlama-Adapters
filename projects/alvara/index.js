@@ -1,24 +1,31 @@
 const { getLogs2 } = require('../helper/cache/getLogs')
 const { sumTokens2 } = require('../helper/unwrapLPs')
 
-const basketCreatedAbi    = 'event BSKTCreated(string name, string symbol, address bskt, address bsktPair, address indexed creator, uint256 amount, string _id, string description, uint256 feeAmount)';
-const basketCreatedAbiOld = 'event BSKTCreated(string name, string symbol, address bskt, address bsktPair, address indexed creator, uint256 amount, uint256 _legacy, string _id, string description, uint256 feeAmount)';
-const ALVA = '0x8e729198d1C59B82bd6bBa579310C40d740A11C2';
+const basketCreatedAbiV1 = 'event BSKTCreated(string name, string symbol, address bskt, address bsktPair, address indexed creator, uint256 amount, uint256 _legacy, string _id, string description, uint256 feeAmount)';
+const basketCreatedAbiV2 = 'event BSKTCreated(string name, string symbol, address bskt, address bsktPair, address indexed creator, uint256 amount, string _id, string description, uint256 feeAmount)';
+const basketCreatedAbiV3 = 'event BSKTCreated(string name, string symbol, address bskt, address bsktPair, address indexed creator, uint256 amount, string basketId, string description)';
 
 const CONFIG = {
     ethereum: {
         factory: '0xFca3732ca3b501b9B2971065d4B5AeB889B5563a',
-        fromBlock: 23048185
+        fromBlock: 23048185,
+        alva: '0x8e729198d1C59B82bd6bBa579310C40d740A11C2'
+    },
+    base: {
+        factory: '0x4B6eeD38E240D0869Efc10982824e77c7C31da3b',
+        fromBlock: 44089906,
+        alva: '0xCC68F95cf050E769D46d8d133Bf4193fCBb3f1Eb'
     }
 }
 
 async function getBsktPairs(api) {
     const cfg = CONFIG[api.chain]
-    const [logsNew, logsOld] = await Promise.all([
-        getLogs2({ api, eventAbi: basketCreatedAbi,    target: cfg.factory, fromBlock: cfg.fromBlock, extraKey: 'BSKTCreated-new' }),
-        getLogs2({ api, eventAbi: basketCreatedAbiOld, target: cfg.factory, fromBlock: cfg.fromBlock, extraKey: 'BSKTCreated-old' }),
+    const [logsV1, logsV2, logsV3] = await Promise.all([
+        getLogs2({ api, eventAbi: basketCreatedAbiV1, target: cfg.factory, fromBlock: cfg.fromBlock, extraKey: 'BSKTCreated-v1' }),
+        getLogs2({ api, eventAbi: basketCreatedAbiV2, target: cfg.factory, fromBlock: cfg.fromBlock, extraKey: 'BSKTCreated-v2' }),
+        getLogs2({ api, eventAbi: basketCreatedAbiV3, target: cfg.factory, fromBlock: cfg.fromBlock, extraKey: 'BSKTCreated-v3' }),
     ])
-    return [...logsNew, ...logsOld].map(l => l.bsktPair)
+    return [...logsV1, ...logsV2, ...logsV3].map(l => l.bsktPair)
 }
 
 async function tvl(api) {
@@ -37,16 +44,17 @@ async function tvl(api) {
             tokensAndOwners.push([token, bsktPairs[i]])
         }
     }
-    return sumTokens2({ api, tokensAndOwners, blacklistedTokens: [ALVA] })
+    return sumTokens2({ api, tokensAndOwners, blacklistedTokens: [CONFIG[api.chain].alva] })
 }
 
 async function staking(api) {
     const bsktPairs = await getBsktPairs(api)
     if (!bsktPairs.length) return
-    return sumTokens2({ api, tokens: [ALVA], owners: bsktPairs })
+    return sumTokens2({ api, tokens: [CONFIG[api.chain].alva], owners: bsktPairs })
 }
 
 module.exports = {
-    methodology: 'TVL counts the underlying tokens held in every Alvara basket pair contract deployed by the BSKT factory. Baskets are discovered via BSKTCreated events (factory has been upgraded once, so both event variants are scanned). The protocol\'s own ALVA governance token is excluded from TVL and reported under staking.',
-    ethereum: { tvl, staking }
+    methodology: 'TVL counts the underlying tokens held in every Alvara basket pair contract deployed by the BSKT factories on each chain. ALVA tokens are reported under staking.',
+    ethereum: { tvl, staking },
+    base: { tvl, staking }
 }
