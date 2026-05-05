@@ -91,10 +91,7 @@ const COMPOUND_POOLS = {
   
   const allPoolTokens = [
     ...Object.values(AAVE_POOLS),
-    COMPOUND_COMET_USDC,
-    COMPOUND_COMET_WETH,
-    COMPOUND_COMET_WBTC,
-    COMPOUND_COMET_USDT,
+    ...Object.values(COMPOUND_POOLS),
     ...Object.values(SPARK_POOLS),
     ...Object.values(ETHEREUM_MORPHO_POOLS),
     ...Object.values(FLUID_POOLS),
