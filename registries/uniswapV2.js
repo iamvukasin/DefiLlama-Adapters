@@ -2886,6 +2886,16 @@ const uniV2Configs = {
       staking: ['0xb6C6B8bF9d415E2D91B95134800De146Dcc5dc94', '0x11cf6bf6d87cb0eb9c294fd6cbfec91ee3a1a7d0'],
     },
   },
+  'mezo-tigris-v3': {
+    _options: {
+      abis: {
+        allPairsLength: 'uint256:allPoolsLength',
+        allPairs: 'function allPools(uint256) view returns (address)',
+      },
+      fetchBalances: true,
+    },
+    mezo: '0xBB24AF5c6fB88F1d191FA76055e30BF881BeEb79',
+  },
 }
 
 module.exports = buildProtocolExports(uniV2Configs, uniV2ExportFn)
