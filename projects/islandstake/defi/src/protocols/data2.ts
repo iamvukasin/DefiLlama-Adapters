@@ -1,5 +1,5 @@
 {
-  id: "REPLACE_WITH_NEXT_FREE_ID",
+  id: "29196",
   name: "IslandStake",
   address: "ton:EQD4l0TnN13SmF_wSIL6ho1sBmqc4H_KN1kFqPjLJgIpkBOZ",
   symbol: "iTON",
