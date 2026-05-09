@@ -1,0 +1,20 @@
+{
+  id: "REPLACE_WITH_NEXT_FREE_ID",
+  name: "IslandStake",
+  address: "ton:EQD4l0TnN13SmF_wSIL6ho1sBmqc4H_KN1kFqPjLJgIpkBOZ",
+  symbol: "iTON",
+  url: "https://islandstake.com",
+  description: "IslandStake is a Lido-style liquid staking protocol on TON. Users deposit TON and receive iTON, a yield-bearing jetton whose exchange rate appreciates over time as staking rewards accrue to the pool.",
+  chain: "TON",
+  logo: "https://islandstake.com/logo.png",
+  audits: "0",
+  audit_links: [],
+  category: "Liquid Staking",
+  chains: ["TON"],
+  module: "islandstake/index.js",
+  twitter: "REPLACE_WITH_TWITTER_HANDLE_OR_REMOVE",
+  oracles: [],
+  forkedFrom: [],
+  methodology: "TVL is the total TON deposited in the staking pool, read on-chain via get_pool_data on the master contract.",
+  github: ["REPLACE_WITH_GITHUB_HANDLE_OR_REMOVE"]
+}
