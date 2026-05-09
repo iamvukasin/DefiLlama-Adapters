@@ -13,6 +13,8 @@ async function tvl(api) {
 
 module.exports = {
   methodology:
-    "TVL is the total TON deposited in the IslandStake liquid staking pool, read on-chain via the get_pool_data getter on the master jetton contract (pool_ton_balance field). iTON is the liquid staking receipt jetton.",
+    "TVL is the total TON deposited in the IslandStake liquid staking pool, " +
+    "read on-chain via the get_pool_data getter on the master jetton contract " +
+    "(pool_ton_balance field). iTON is the liquid staking receipt jetton.",
   ton: { tvl },
 };
