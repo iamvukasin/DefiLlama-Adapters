@@ -12,9 +12,8 @@
   category: "Liquid Staking",
   chains: ["TON"],
   module: "islandstake/index.js",
-  twitter: "REPLACE_WITH_TWITTER_HANDLE_OR_REMOVE",
+  twitter: "@DurovIsland",
   oracles: [],
   forkedFrom: [],
   methodology: "TVL is the total TON deposited in the staking pool, read on-chain via get_pool_data on the master contract.",
-  github: ["REPLACE_WITH_GITHUB_HANDLE_OR_REMOVE"]
 }
