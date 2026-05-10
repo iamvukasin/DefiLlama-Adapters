@@ -169,13 +169,13 @@ module.exports = {
   timetravel: false,            // ZigChain query is live-state only
   misrepresentedTokens: false,
   methodology:
-    'Core: TVL is calculated by 1) unwrapping Bitflux LP tokens held by Nawa Solv Vault V2 to their underlying assets ' +
-    '(e.g. SolvBTC.CORE, WBTC, SolvBTC.b) based on pool reserves and total supply, and 2) tracking dualCore token ' +
-    'holdings in the Core vault address. ' +
     'ZigChain: TVL is the sum of (1) the Nawa Zig vault AUM (in stZIG) converted to uZIG equivalent via ' +
     'Valdora’s reverse_st_zig_price oracle and reported as uZIG, and (2) the Nawa USDC vault AUM ' +
     '(oracle-reported USD value of capital deployed off-chain via Zignaly into a cross-chain ' +
-    'private credit position), reported as USDC.',
+    'private credit position), reported as USDC. ' +
+    'Core: TVL is calculated by 1) unwrapping Bitflux LP tokens held by Nawa Solv Vault V2 to their underlying assets ' +
+    '(e.g. SolvBTC.CORE, WBTC, SolvBTC.b) based on pool reserves and total supply, and 2) tracking dualCore token ' +
+    'holdings in the Core vault address.',
   core: {
     tvl: coreTvl,
   },
