@@ -224,7 +224,7 @@ async function tvl(api) {
       abi: "function position(bytes32,address) view returns (uint256,uint128,uint128 amount)",
       calls: owners.map((owner) => ({ params: [MORPHO_SUSDE_MARKET_ID, owner] })),
     });
-    api.add(TOKENS.USDE, positions.map(i => i.amount))
+    api.add(TOKENS.SUSDE, positions.map(i => i.amount))
   }
 
   async function handleFluidPositions() {
@@ -544,6 +544,7 @@ async function getOwners(api) {
 module.exports = {
   methodology:
     "Sums up the supported tokens in Rumpel Wallets + Deposits in the Rumpel Point Tokenization Vault",
+  doublecounted: true,
   start: DEPLOYMENT.RUMPEL_WALLET_FACTORY.timestamp,
   ethereum: {
     tvl,
