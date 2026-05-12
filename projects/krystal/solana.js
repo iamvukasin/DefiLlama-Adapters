@@ -1,5 +1,6 @@
 const { PublicKey } = require("@solana/web3.js");
-const bs58 = require("bs58").default;
+const sdk = require("@defillama/sdk");
+const { bs58 } = require("@project-serum/anchor/dist/cjs/utils/bytes");
 const {
   getConnection,
   decodeAccount,
@@ -44,19 +45,20 @@ async function addRaydiumPositions({ api, owners = [], owner, connection = getCo
 
 
   const positions = [];
-  await Promise.all(owners.map((vault) => {
-    if (typeof vault === "string") vault = new PublicKey(vault);
-    return findClmmPositionsByOwner(connection, vault);
-  }));
+  await sdk.util.runInPromisePool({
+    concurrency: 5,
+    items: owners,
+    processor: async (vault) => {
+      if (typeof vault === "string") vault = new PublicKey(vault);
+      await findClmmPositionsByOwner(connection, vault);
+    },
+  });
 
   const positionAccountInfos = await connection.getMultipleAccountsInfo(pdaPersonalPositionAddressesAll);
 
   positionAccountInfos.forEach((account) => {
-    if (!account) return;
-
-    try {
-      positions.push(decodeAccount("raydiumPositionInfo", account));
-    } catch {}
+    if (!account || account.owner.toBase58() != CLMM_PROGRAM_ID) return;
+    positions.push(decodeAccount("raydiumPositionInfo", account));
   });
 
   const poolIds = getUniqueAddresses(positions.map((position) => position.poolId.toBase58()), "solana");
@@ -66,9 +68,7 @@ async function addRaydiumPositions({ api, owners = [], owner, connection = getCo
     const poolId = poolIds[i];
     const poolAccount = poolAccounts[i];
     if (!poolAccount) continue;
-    try {
-      pools.set(poolId, decodeAccount("raydiumCLMM", poolAccount));
-    } catch {}
+    pools.set(poolId, decodeAccount("raydiumCLMM", poolAccount));
   }
 
   for (const position of positions) {
@@ -110,12 +110,8 @@ async function addRaydiumPositions({ api, owners = [], owner, connection = getCo
 
     const tokenNftMints = [];
     allTokenAccounts.forEach(({ account }) => {
-      let amount, mint;
-      try {
-        ({ amount, mint } = decodeAccount("tokenAccount", account));
-      } catch {
-        return;
-      }
+      const { amount, mint } = decodeAccount("tokenAccount", account)
+
       const rawAmount = amount.toString();
       const token = mint.toBase58();
       if (rawAmount === "1") {
