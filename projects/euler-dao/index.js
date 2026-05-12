@@ -34,6 +34,11 @@ const configs = {
       eulerVaultOwners: [
         '0xAeE4e2E8024C1B58f4686d1CB1646a6d5755F05C',
       ],
+    },
+    monad: {
+      eulerVaultOwners: [
+        // '0x5D42F8aCd567810D57D60f90bB9C6d194207a6e1',  // operated by k3 now: https://forum.euler.finance/t/sunsetting-of-dao-managed-market-and-vaults/1828
+      ],
     }
   }
 }
