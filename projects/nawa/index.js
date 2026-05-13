@@ -103,27 +103,16 @@ async function fetchUsdcVaultAum() {
 }
 
 async function zigchainTvl(api) {
-  const balances = api.getBalances();
+  const aumStzig = await fetchZigVaultTVL()
+  if (aumStzig) api.add(STZIG_DENOM, aumStzig.toString())
 
-  const aumStzig = await fetchZigVaultTVL();
-  if (aumStzig) {
-    const key = `zigchain:${STZIG_DENOM}`;
-    const current = balances[key] ? BigInt(balances[key]) : 0n;
-    balances[key] = (current + aumStzig).toString();
-  }
-
-  const aumUsdc = await fetchUsdcVaultAum();
+  const aumUsdc = await fetchUsdcVaultAum()
   if (aumUsdc) {
-    // Funds are deployed cross-chain via Zignaly; tag as USD value
-    // rather than a chain-specific denom. Aum is in USDC base units
-    // (6 decimals); convert to a USD float for addCGToken.
-    const usdValue = Number(aumUsdc) / 1e6;
+    const usdValue = Number(aumUsdc) / 1e6
     if (Number.isFinite(usdValue) && usdValue > 0) {
-      api.addCGToken('usd-coin', usdValue);
+      api.addCGToken('usd-coin', usdValue)
     }
   }
-
-  return transformBalances('zigchain', balances);
 }
 
 module.exports = {
