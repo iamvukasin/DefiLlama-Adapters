@@ -245,7 +245,7 @@ const configs = {
     timetravel: false,
     start: '2020-09-08',
     ethereum: { comptroller: '0xbdC857eae1D15ad171E11af6FC3e99413Ed57Ec4' },
-    bsc: { comptroller: '0x589DE0F0Ccf905477646599bb3E5C622C84cC0BA', cether: '0x1Ffe17B99b439bE0aFC831239dDECda2A790fF3A', cetheEquivalent: ADDRESSES.bsc.WBNB },
+    bsc: { comptroller: '0x589DE0F0Ccf905477646599bb3E5C622C84cC0BA', cether: '0x1Ffe17B99b439bE0aFC831239dDECda2A790fF3A', cetheEquivalent: ADDRESSES.bsc.WBNB, isInsolvent: true },
     polygon: { comptroller: '0x20ca53e2395fa571798623f1cfbd11fe2c114c24' },
     arbitrum: { comptroller: '0xbadaC56c9aca307079e8B8FC699987AAc89813ee' },
     base: { comptroller: '0x94d31f92a7f85b51F0B628467B3E660BA3e8D799' },
