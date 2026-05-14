@@ -44,7 +44,7 @@ const boringVaultsV0Scroll = [
     teller: "0xCc9A7620D0358a521A068B444846E3D5DebEa8fA",
     lens: "0x5232bc0F5999f8dA604c42E1748A13a170F94A1B",
     startBlock: 12775217, 
-    baseAsset: '0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34',
+    baseAsset: ADDRESSES.arbitrum.USDe,
   },
 ];
 
