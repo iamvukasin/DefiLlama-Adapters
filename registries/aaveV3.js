@@ -19,8 +19,8 @@ const configs = {
     unit0: ['0x99118c1Ca7D0DC824719E740d4b4721009a267d6'],
   },
   'purrlend': {
-    hyperliquid: ['0xa8Ca6a4A485485910aA4023b9963Dfd2f3A5aeb0'],
-    megaeth: ['0xfCaE4E9Acb1E5C78aa699d43c5cc0eAC5399E754'],
+    hyperliquid:{poolDatas: ['0xa8Ca6a4A485485910aA4023b9963Dfd2f3A5aeb0'], isInsolvent: true},
+    megaeth: { poolDatas: ['0xfCaE4E9Acb1E5C78aa699d43c5cc0eAC5399E754'], isInsolvent: true },
   },
   // --- newly migrated aaveV3Export protocols ---
   'zentra': {
